@@ -13,6 +13,11 @@ const secrets = require('../cubecobrasecrets/secrets');
 const mongosecrets = require('../cubecobrasecrets/mongodb');
 var updatedb = require('./serverjs/updatecards.js');
 
+interface bodyParser {
+  limit: string;
+  extended: boolean;
+}
+
 // Connect db
 mongoose.connect(mongosecrets.connectionString);
 const db = mongoose.connection;
@@ -28,7 +33,8 @@ db.on('error', (err) => {
 // Init app
 const app = express();
 
-const store = new MongoDBStore({
+const store = new MongoDBStore(
+  {
     uri: mongosecrets.connectionString,
     databaseName: mongosecrets.dbname,
     collection: 'session_data',
@@ -64,10 +70,7 @@ app.set('view engine', 'pug');
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/js', express.static(path.join(__dirname, 'dist')));
-app.use(
-  '/jquery-ui',
-  express.static(`${__dirname}/node_modules/jquery-ui-dist/`),
-);
+app.use('/jquery-ui', express.static(`${__dirname}/node_modules/jquery-ui-dist/`));
 
 const sessionOptions = {
   secret: secrets.session,
@@ -76,6 +79,7 @@ const sessionOptions = {
   saveUninitialized: true,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    secure: false,
   },
 };
 
@@ -143,8 +147,8 @@ app.use((req, res) => {
   res.status(404).render('misc/404', {});
 });
 
-schedule.scheduleJob('0 0 * * *', function(){
-  console.log("Starting midnight cardbase update...");
+schedule.scheduleJob('0 0 * * *', function() {
+  console.log('Starting midnight cardbase update...');
   updatedb.updateCardbase();
 });
 
