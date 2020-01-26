@@ -1,9 +1,11 @@
 import * as React from 'react';
 // TODO: Convert to an import after CSRFForm is converted to .tsx
-const CSRFForm: any = require('./CSRFForm');
+const CSRFForm: any = require('./CSRFForm.js');
 import CubeContext from './CubeContext';
+import { CustomFormat } from '../../types';
 // TODO: Convert to an import after TextEntry is converted to .tsx
 const TextEntry: any = require('./TextEntry');
+
 import {
   Button,
   Card,
@@ -25,14 +27,6 @@ import {
   ModalHeader,
   Row,
 } from 'reactstrap';
-
-interface CustomFormat {
-  id: string;
-  title: string;
-  multiples: boolean;
-  html: string;
-  packs: string[][];
-}
 
 interface CustomDraftFormatModalProps {
   isOpen: boolean;

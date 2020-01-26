@@ -1,19 +1,33 @@
-const shuffleSeed = require('shuffle-seed');
+import { CubeCard } from '../types';
+const shuffleSeed: any = require('shuffle-seed');
 
 const adminname = 'Dekkaru';
 
-function has_profanity(text) {
+// TODO: search for references to these functions and make sure renamed
+
+/**
+ * Determine if a string contains profanity and returns true/false.
+ *
+ * @param {string} text
+ * @returns {boolean}
+ */
+function hasProfanity(text: string): boolean {
   if (!text) return false;
 
   const Filter = require('bad-words');
   let filter = new Filter();
-  let removeWords = ['hell', 'sadist', 'God'];
+  const removeWords: string[] = ['hell', 'sadist', 'God'];
   filter.removeWords(...removeWords);
 
   return filter.isProfane(text.toLowerCase());
 }
 
-function generate_edit_token() {
+/**
+ * Creates and returns a randomized string to use as an edit token.
+ *
+ * @return {string}
+ */
+function generateEditToken(): string {
   return (
     Math.random()
       .toString(36)
@@ -24,16 +38,34 @@ function generate_edit_token() {
   );
 }
 
-function to_base_36(num) {
+/**
+ * Converts a base to number to a base 36 number string.
+ *
+ * @param {number} num
+ * @returns {string}
+ */
+function toBase36(num: number): string {
   return num.toString(36);
 }
 
-function from_base_36(str) {
+/**
+ * Converts a base 36 number string into a base 10 number.
+ *
+ * @param {string} str
+ * @returns {number}
+ */
+function fromBase36(str: string): number {
   if (!str) return 0;
   return parseInt(str, 36);
 }
 
-function addWordToTree(obj, word) {
+/**
+ *
+ * @param obj
+ * @param {string} word
+ * @returns {void}
+ */
+function addWordToTree(obj, word: string) {
   if (word.length <= 0) {
     return;
   } else if (word.length == 1) {
@@ -54,11 +86,21 @@ function addWordToTree(obj, word) {
   }
 }
 
-function binaryInsert(value, array, startVal, endVal) {
-  var length = array.length;
-  var start = typeof startVal != 'undefined' ? startVal : 0;
-  var end = typeof endVal != 'undefined' ? endVal : length - 1; //!! endVal could be 0 don't use || syntax
-  var m = start + Math.floor((end - start) / 2);
+/**
+ * Inserts a provided string into its place in a sorted (increasing) array.
+ * TODO: update test to use strings
+ *
+ * @param {string} value
+ * @param {string[]} array
+ * @param {string} startIndex
+ * @param {string} endIndex
+ * @returns {void}
+ */
+function binaryInsert(value: string, array: string[], startIndex?: number, endIndex?: number): void {
+  const length = array.length;
+  const start = typeof startIndex != 'undefined' ? startIndex : 0;
+  const end = typeof endIndex != 'undefined' ? endIndex : length - 1;
+  const middle = start + Math.floor((end - start) / 2);
 
   if (length == 0) {
     array.push(value);
@@ -71,7 +113,6 @@ function binaryInsert(value, array, startVal, endVal) {
   }
 
   if (value < array[start]) {
-    //!!
     array.splice(start, 0, value);
     return;
   }
@@ -80,18 +121,23 @@ function binaryInsert(value, array, startVal, endVal) {
     return;
   }
 
-  if (value < array[m]) {
-    binaryInsert(value, array, start, m - 1);
+  if (value < array[middle]) {
+    binaryInsert(value, array, start, middle - 1);
     return;
   }
 
-  if (value > array[m]) {
-    binaryInsert(value, array, m + 1, end);
+  if (value > array[middle]) {
+    binaryInsert(value, array, middle + 1, end);
     return;
   }
 }
 
-function newCard(card_details, tags) {
+/**
+ *
+ * @param card_details
+ * @param tags
+ */
+function newCard(card_details, tags): CubeCard {
   return {
     tags: Array.isArray(tags) ? tags : [],
     status: 'Owned',
@@ -151,6 +197,7 @@ function wrapAsyncApi(route) {
       return route(...args);
     } catch (err) {
       console.error(err);
+      var res: any;
       res.status(500).send({
         success: 'false',
         message: 'Internal server error',
@@ -217,10 +264,10 @@ var exports = {
     }
     return ret;
   },
-  generate_edit_token,
-  to_base_36,
-  from_base_36,
-  has_profanity,
+  generate_edit_token: generateEditToken,
+  toBase36,
+  from_base_36: fromBase36,
+  has_profanity: hasProfanity,
   fromEntries,
   isAdmin: function(user) {
     return user && user.username == adminname;

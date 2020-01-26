@@ -1,4 +1,26 @@
-const generateMeta = function(title, description, image, url, width, height) {
+interface MetaObject {
+  property: string;
+  content: string;
+}
+
+/**
+ * TODO: what am i? Seems some params are optional
+ *
+ * @param {string} title
+ * @param {string} description
+ * @param {string} image
+ * @param {string} url
+ * @param {string} width
+ * @param {string} height
+ */
+const generateMeta = function(
+  title: string,
+  description: string,
+  image: string,
+  url: string,
+  width: string,
+  height: string,
+): MetaObject[] {
   return [
     {
       property: 'og:title',

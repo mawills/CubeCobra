@@ -157,10 +157,10 @@ test('generate_edit_token does not generate the same token on sequential calls',
   expect(firstResult).not.toBe(secondResult);
 });
 
-test('to_base_36 returns the base36 representation of its input', () => {
+test('toBase36 returns the base36 representation of its input', () => {
   const testInput = 69;
   const expected = testInput.toString(36);
-  const result = util.to_base_36(testInput);
+  const result = util.toBase36(testInput);
   expect(result).toBe(expected);
 });
 

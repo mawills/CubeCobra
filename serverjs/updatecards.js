@@ -3,7 +3,7 @@ const path = require('path');
 const https = require('https');
 const cardutil = require('../dist/utils/Card.js');
 
-const util = require('./util.js');
+const util = require('./util.ts');
 const carddb = require('./cards.js');
 
 const _catalog = {};

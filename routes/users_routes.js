@@ -5,7 +5,7 @@ const passport = require('passport');
 const emailconfig = require('../../cubecobrasecrets/email');
 const mailer = require('nodemailer');
 const fs = require('fs');
-const util = require('../serverjs/util.js');
+const util = require('../serverjs/util.ts');
 
 // Bring in models
 let User = require('../models/user');

@@ -43,9 +43,9 @@ async function generate_short_id() {
   let new_id = '';
   while (true) {
     max++;
-    new_id = util.to_base_36(max);
+    new_id = util.toBase36(max);
 
-    if (!util.has_profanity(new_id) && !short_ids.includes(new_id) && !url_aliases.includes(new_id)) break;
+    if (!util.hasProfanity(new_id) && !short_ids.includes(new_id) && !url_aliases.includes(new_id)) break;
   }
 
   return new_id;

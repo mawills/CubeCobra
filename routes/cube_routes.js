@@ -28,10 +28,10 @@ const draftutil = require('../dist/utils/draftutil.js');
 const cardutil = require('../dist/utils/Card.js');
 const carddb = require('../serverjs/cards.js');
 carddb.initializeCardDb();
-const util = require('../serverjs/util.js');
+const util = require('../serverjs/util.ts');
 const { GetPrices } = require('../serverjs/prices.js');
 const mergeImages = require('merge-images');
-const generateMeta = require('../serverjs/meta.js');
+const generateMeta = require('../serverjs/meta.ts');
 const { Canvas, Image } = require('canvas');
 Canvas.Image = Image;
 

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const util = require('./util.js');
+const util = require('./util.ts');
 const cardutil = require('../dist/utils/Card.js');
 
 var data = {

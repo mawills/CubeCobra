@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var util = require('../serverjs/util.js');
+var util = require('../serverjs/util.ts');
 
 const { ensureAuth, csrfProtection } = require('./middleware');
 
